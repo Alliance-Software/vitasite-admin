@@ -1,0 +1,26 @@
+@import "uikit/uikit.scss";
+
+$vs-sidebar-width:                                      200px;
+
+.vs-brand {
+    width: $vs-sidebar-width;
+    text-align: center;
+}
+
+.vs-sidebar {
+    background: #f9fafc;
+    position: absolute;
+    top: 55px;
+    left: 0;
+    min-height: 100%;
+    width: $vs-sidebar-width;
+    z-index: 810;
+    transition: transform .3s ease-in-out, width .3s ease-in-out;
+
+}
+
+.vs-content {
+    transition: transform .3s ease-in-out, width .3s ease-in-out;
+    margin-left: 230px;
+    z-index: 820;
+}

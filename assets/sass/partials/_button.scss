@@ -1,0 +1,579 @@
+$ubtn-use-compass: false;
+$ubtn: 'Unicorn Buttons';
+$ubtn-namespace: '.button' !default; //prefix for all classes
+
+/*
+* Button Defaults
+*/
+$ubtn-bgcolor: #EEE !default;
+$ubtn-font-color: #666 !default;
+$ubtn-font-weight: 300 !default;
+$ubtn-font-size: 16px !default;
+$ubtn-height: 40px !default;
+$ubtn-font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif  !default;
+
+/*
+* Button Colors
+*/
+$ubtn-colors: ('primary' #1B9AF7  #FFF) ('plain' #FFF #1B9AF7) ('inverse' #222 #EEE) !default;
+
+/*
+* Button Shapes
+*/
+$ubtn-shapes: (square 0) (box 10px) (rounded 4px) (pill 200px) (circle 100%) !default;
+
+/*
+* Button Sizes
+*/
+$ubtn-sizes: (giant 1.75) (jumbo 1.5) (large 1.25) (normal 1) (small .75) (tiny .6) !default;
+
+/*
+* Color Mixin
+*/
+@mixin colors($type-namespace) {
+  #{$type-namespace} {
+    @each $ubtn-color in $ubtn-colors {
+      $ubtn-name: nth($ubtn-color, 1);
+      $ubtn-background: nth($ubtn-color, 2);
+      $ubtn-color: nth($ubtn-color, 3);
+      $ubtn-color-namespace: $ubtn-namespace + '-' + $ubtn-name;
+
+      &#{$ubtn-color-namespace} {
+        @content;
+      }
+    }
+  }
+}
+
+/*
+* No Animation
+*/
+@mixin no_animation {
+  animation-name: none;
+}
+
+/*
+* Clearfix
+*/
+@mixin clearfix {
+  &:after {
+    content: " ";
+    display: block;
+    clear: both;
+  }
+}
+
+/*
+* Base Button Style
+*/
+#{$ubtn-namespace} {
+  color: $ubtn-font-color;
+  background-color: $ubtn-bgcolor;
+  border-color: $ubtn-bgcolor;
+  font-weight: $ubtn-font-weight;
+  font-size: $ubtn-font-size;
+  font-family: $ubtn-font-family;
+  text-decoration: none;
+  text-align: center;
+  line-height: $ubtn-height;
+  height: $ubtn-height;
+  padding: 0 $ubtn-height;
+  margin: 0;
+  display: inline-block;
+  appearance: none;
+  cursor: pointer;
+  border: none;
+  box-sizing: border-box;
+
+  // Compass Mixins
+  @if $ubtn-use-compass {
+    @include transition-property(all);
+    @include transition-duration(.3s);
+  }
+  @else {
+    transition-property: all;
+    transition-duration:.3s;
+  }
+
+  &:visited {
+    color: $ubtn-font-color;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: lighten($ubtn-bgcolor, 3%);
+    text-decoration: none;
+    outline: none;
+  }
+
+  &:active,
+  &.active,
+  &.is-active {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .3);
+    text-decoration: none;
+    background-color: desaturate($ubtn-bgcolor, 10%);
+    border-color: darken($ubtn-bgcolor, 12%);
+
+    // Compass Mixin
+    @if $ubtn-use-compass {
+      @include transition-duration(0s);
+    }
+    @else {
+      transition-duration: 0s;
+    }
+  }
+
+  /*
+  * Disabled State
+  */
+  &.disabled,
+  &.is-disabled,
+  &:disabled {
+    top: 0 !important;
+    background: #EEE !important;
+    border: 1px solid #DDD !important;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 1) !important;
+    color: #CCC !important;
+    cursor: default !important;
+    appearance: none !important;
+
+    // Compass Mixin
+    @if $ubtn-use-compass {
+      @include box-shadow(0 1px 2px rgba(0, 0, 0, .10) !important);
+      @include opacity(.8 !important);
+    }
+    @else {
+      box-shadow: none !important;
+      opacity:.8 !important;
+    }
+  }
+}
+
+/*
+* Base Button Tyography
+*/
+#{$ubtn-namespace}-uppercase {
+  text-transform: uppercase;
+}
+#{$ubtn-namespace}-lowercase {
+  text-transform: lowercase;
+}
+#{$ubtn-namespace}-capitalize {
+  text-transform: capitalize;
+}
+#{$ubtn-namespace}-small-caps {
+  font-variant: small-caps;
+}
+
+#{$ubtn-namespace}-icon-txt-large {
+  font-size: 36px !important;
+}
+
+/*
+* Base padding
+*/
+#{$ubtn-namespace}-width-small {
+  padding: 0 10px !important;
+}
+
+/*
+* Base Colors
+*/
+@each $ubtn-color in $ubtn-colors {
+  $ubtn-name: nth($ubtn-color, 1);
+  $ubtn-background: nth($ubtn-color, 2);
+  $ubtn-color: nth($ubtn-color, 3);
+
+  // Crete class for .button-primary
+  // and legacy flat .button-primary-flat
+  #{$ubtn-namespace}-#{$ubtn-name},
+  #{$ubtn-namespace}-#{$ubtn-name}-flat {
+    background-color: $ubtn-background;
+    border-color: $ubtn-background;
+    color: $ubtn-color;
+
+    &:visited {
+      color: $ubtn-color;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: lighten($ubtn-background, 10%);
+      border-color: lighten($ubtn-background, 10%);
+      color: $ubtn-color;
+    }
+
+    &:active,
+    &.active,
+    &.is-active {
+      background-color: desaturate($ubtn-background, 10%);
+      border-color: desaturate($ubtn-background, 10%);
+    }
+  }
+}
+
+/*
+* Base Layout Styles
+*/
+#{$ubtn-namespace}-block,
+#{$ubtn-namespace}-stacked {
+  display: block;
+}
+
+/*
+* Button Shapes
+*/
+@each $ubtn-shape in $ubtn-shapes {
+  $ubtn-shape-name: nth($ubtn-shape, 1);
+  $ubtn-shape-radius: nth($ubtn-shape, 2);
+
+  #{$ubtn-namespace}-#{$ubtn-shape-name} {
+    @if($ubtn-use-compass) {
+      @include border-radius($ubtn-shape-radius);
+    }
+    @else {
+      border-radius: $ubtn-shape-radius;
+    }
+  }
+}
+
+/*
+* Size Adjustment for equal height & widht buttons
+*/
+#{$ubtn-namespace}-circle,
+#{$ubtn-namespace}-box,
+#{$ubtn-namespace}-square {
+  padding: 0 !important;
+  width: $ubtn-height;
+
+  @each $ubtn-sizes-hash in $ubtn-sizes {
+    $ubtn-size: nth($ubtn-sizes-hash, 1);
+    $ubtn-multiplier : nth($ubtn-sizes-hash, 2);
+    $ubtn-size-namespace: #{$ubtn-namespace}-#{$ubtn-size};
+
+    &#{$ubtn-size-namespace} {
+      width: $ubtn-height * $ubtn-multiplier;
+    }
+  }
+}
+
+/*
+* Border Buttons
+*/
+#{$ubtn-namespace}-border {
+  background: none;
+  border-width: 2px;
+  border-style: solid;
+  line-height: $ubtn-height - 4;
+
+  &:hover {
+    background-color: rgba(lighten($ubtn-bgcolor, 10%), .9)
+  }
+
+  &:active,
+  &.active,
+  &.is-active {
+    box-shadow: none;
+    text-shadow: none;
+
+    @if $ubtn-use-compass {
+      @include transition-property(all);
+      @include transition-duration(.3s);
+    }
+    @else {
+      transition-property: all;
+      transition-duration:.3s;
+    }
+  }
+}
+
+/*
+* Border Optional Sizes
+*/
+#{$ubtn-namespace}-border-thin {
+  @extend #{$ubtn-namespace}-border;
+  border-width: 1px;
+}
+#{$ubtn-namespace}-border-thick {
+  @extend #{$ubtn-namespace}-border;
+  border-width: 3px;
+}
+
+/*
+* Border Button Colors
+*/
+#{$ubtn-namespace}-border,
+#{$ubtn-namespace}-border-thin,
+#{$ubtn-namespace}-border-thick {
+
+  @each $ubtn-color in $ubtn-colors {
+    $ubtn-name: nth($ubtn-color, 1);
+    $ubtn-background: nth($ubtn-color, 2);
+    $ubtn-color: nth($ubtn-color, 3);
+    $ubtn-color-namespace: $ubtn-namespace + '-' + $ubtn-name;
+
+    &#{$ubtn-color-namespace} {
+      color: $ubtn-background;
+
+      &:hover,
+      &:focus {
+        background-color: rgba(lighten($ubtn-background, 10%), .9);
+        color: rgba($ubtn-color, .9);
+      }
+
+      &:active,
+      &.active,
+      &.is-active {
+        background-color: rgba(desaturate($ubtn-background, 10%), .7);
+        color: rgba($ubtn-color, .5);
+
+        @if $ubtn-use-compass {
+          @include opacity(.3);
+        }
+        @else {
+          opacity: .3;
+        }
+      }
+    }
+  }
+
+  /*
+  * Border Button Size Adjustment
+  */
+  @each $ubtn-sizes-hash in $ubtn-sizes {
+    $ubtn-size: nth($ubtn-sizes-hash, 1);
+    $ubtn-multiplier : nth($ubtn-sizes-hash, 2);
+    $ubtn-size-namespace: #{$ubtn-namespace}-#{$ubtn-size};
+
+    &#{$ubtn-size-namespace} {
+      line-height: $ubtn-height * $ubtn-multiplier - 4;
+    }
+  }
+}
+
+/*
+* Border Buttons
+*/
+#{$ubtn-namespace}-borderless {
+  background: none;
+  border: none;
+  padding: 0 8px !important;
+  color: $ubtn-bgcolor;
+  font-size: $ubtn-font-size * 1.3;
+  font-weight: 200;
+
+  &:hover,
+  &:focus {
+    background: none;
+  }
+
+  &:active,
+  &.active,
+  &.is-active {
+    box-shadow: none;
+    text-shadow: none;
+
+    @if $ubtn-use-compass {
+      @include transition-property(all);
+      @include transition-duration(.3s);
+      @include opacity(.3);
+    }
+    @else {
+      transition-property: all;
+      transition-duration:.3s;
+      opacity: .3;
+    }
+  }
+
+  /*
+  * Borderless Button Colors
+  */
+  @each $ubtn-color in $ubtn-colors {
+    $ubtn-name: nth($ubtn-color, 1);
+    $ubtn-background: nth($ubtn-color, 2);
+    $ubtn-color: nth($ubtn-color, 3);
+    $ubtn-color-namespace: $ubtn-namespace + '-' + $ubtn-name;
+
+    &#{$ubtn-color-namespace} {
+      color: $ubtn-background;
+    }
+  }
+
+  /*
+  * Borderles Size Adjustment
+  */
+  @each $ubtn-sizes-hash in $ubtn-sizes {
+    $ubtn-size: nth($ubtn-sizes-hash, 1);
+    $ubtn-multiplier : nth($ubtn-sizes-hash, 2);
+    $ubtn-size-namespace: #{$ubtn-namespace}-#{$ubtn-size};
+    $ubtn-borderless-fontsize: $ubtn-font-size * $ubtn-multiplier * 1.3;
+
+    &#{$ubtn-size-namespace} {
+      font-size: $ubtn-borderless-fontsize;
+      height: $ubtn-borderless-fontsize + 16;
+      line-height: $ubtn-borderless-fontsize + 16;
+    }
+  }
+}
+
+/*
+* Glowing Buttons
+*/
+$ubtn-default-glow-color: #2c9adb !default;
+
+/*
+* Glow animation mixin for Compass users
+*/
+@mixin glow($animation-name) {
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-name: $animation-name;
+}
+
+/*
+* Glowing Keyframes
+*/
+@if($ubtn-use-compass) {
+  @include keyframes(glowing) {
+    from { @include box-shadow(0 0 0 rgba($ubtn-default-glow-color, 0.3));}
+    50% { @include box-shadow(0 0 20px rgba($ubtn-default-glow-color, 0.8));}
+    to { @include box-shadow(0 0 0 rgba($ubtn-default-glow-color, 0.3));}
+  }
+}
+@else {
+  @keyframes glowing {
+  from { box-shadow: 0 0 0 rgba($ubtn-default-glow-color, 0.3);}
+  50% { box-shadow: 0 0 20px rgba($ubtn-default-glow-color, 0.8);}
+  to { box-shadow: 0 0 0 rgba($ubtn-default-glow-color, 0.3);}
+  }
+}
+
+/*
+* Glowing Keyframes for various colors
+*/
+@each $ubtn-color in $ubtn-colors {
+  $ubtn-name: nth($ubtn-color, 1);
+  $ubtn-background: nth($ubtn-color, 2);
+  $ubtn-color: nth($ubtn-color, 3);
+
+  @if($ubtn-use-compass) {
+    @include keyframes(glowing-#{$ubtn-name}) {
+      from { @include box-shadow(0 0 0 rgba($ubtn-background, 0.3));}
+      50% { @include box-shadow(0 0 20px rgba($ubtn-background, 0.8));}
+      to { @include box-shadow(0 0 0 rgba($ubtn-background, 0.3));}
+    }
+  }
+  @else {
+    @keyframes glowing-#{$ubtn-name} {
+    from { box-shadow: 0 0 0 rgba($ubtn-background, 0.3);}
+    50% { box-shadow: 0 0 20px rgba($ubtn-background, 0.8);}
+    to { box-shadow: 0 0 0 rgba($ubtn-background, 0.3);}
+    }
+  }
+}
+
+/*
+* Glowing Buttons Base Styes
+*/
+#{$ubtn-namespace}-glow {
+  @if($ubtn-use-compass) {
+    @include glow(glowing);
+
+    &:active,
+    &.active,
+    &.is-active {
+      @include no_animation;
+    }
+  }
+  @else {
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-name: glowing;
+
+    &:active,
+    &.active,
+    &.is-active {
+      animation-name: none;
+    }
+  }
+}
+
+/*
+* Glowing Button Colors
+*/
+#{$ubtn-namespace}-glow {
+  @each $ubtn-color in $ubtn-colors {
+    $ubtn-name: nth($ubtn-color, 1);
+    $ubtn-background: nth($ubtn-color, 2);
+    $ubtn-color: nth($ubtn-color, 3);
+    $ubtn-color-namespace: $ubtn-namespace + '-' + $ubtn-name;
+
+    &#{$ubtn-color-namespace} {
+      animation-name: glowing-#{$ubtn-name};
+    }
+  }
+}
+
+/*
+* Buton Groups
+*/
+#{$ubtn-namespace}-group {
+  @include clearfix;
+  position: relative;
+  display: inline-block;
+
+  #{$ubtn-namespace},
+  #{$ubtn-namespace}-dropdown {
+    float: left;
+
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+      border-right: none;
+    }
+    &:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: none;
+    }
+    &:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
+
+/*
+* Button Wrapper
+*/
+#{$ubtn-namespace}-wrap {
+  border: 1px solid #e3e3e3;
+  display: inline-block;
+  padding: 9px;
+
+  @if($ubtn-use-compass) {
+    @include background(linear-gradient(#f2f2f2, #FFF));
+    @include border-radius(200px);
+    @include box-shadow(inset 0 1px 3px rgba(0, 0, 0, 0.04));
+  }
+  @else {
+    background: linear-gradient(#f2f2f2, #FFF);
+    border-radius: 200px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+}
+
+/*
+* Button Sizes
+*/
+@each $ubtn-size in $ubtn-sizes {
+  $ubtn-size-name: nth($ubtn-size, 1);
+  $ubtn-size-multiplier: nth($ubtn-size, 2);
+  $ubtn-size-namespace: #{$ubtn-namespace}-#{$ubtn-size-name};
+
+  #{$ubtn-size-namespace} {
+    font-size: $ubtn-font-size * $ubtn-size-multiplier;
+    height: $ubtn-height * $ubtn-size-multiplier;
+    line-height: $ubtn-height * $ubtn-size-multiplier;
+    padding: 0 ($ubtn-height * $ubtn-size-multiplier);
+  }
+}

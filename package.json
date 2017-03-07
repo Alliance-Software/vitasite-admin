@@ -1,0 +1,32 @@
+{
+  "name": "vitasite-admin",
+  "version": "3.0.0",
+  "description": "The Vitasite CMS administrative template.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Provash Shoumma",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.0.1",
+    "gulp-sass": "^2.0.4",
+    "gulp-server-livereload": "^1.5.3",
+    "gulp-watch": "^4.3.5"
+  },
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.0.1",
+    "gulp-sass": "^2.0.4",
+    "gulp-server-livereload": "^1.5.3",
+    "gulp-watch": "^4.3.5"
+  },
+  "keywords": [
+    "gulp",
+    "uikit",
+    "sass",
+    "startup",
+    "template"
+  ]
+}
